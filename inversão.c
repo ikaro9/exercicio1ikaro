@@ -1,8 +1,10 @@
 #include<stdio.h>
+#include <string.h>
 void inverso(char *p){
    int i;
-   for(i =9;i>=0;i--){
-    printf(" %c",p[i]);
+   int tamanho = strlen(p);
+   for(i =tamanho-1;i>=0;i--){
+    printf("%c",p[i]);
    }
 }
 
