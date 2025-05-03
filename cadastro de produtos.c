@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define MAX_PRODUTOS 100
+#define MAX 100
 
 typedef struct {
     char nome[20];
@@ -10,34 +10,42 @@ typedef struct {
     double preco;
 } Produto;
 
-void adicionar(Produto p[], int *qtd, int *codigoAtual) {
-    if (*qtd >= MAX_PRODUTOS) {
+void adicionar(Produto p[], int *quantidade, int *codigoAtual) {
+    if (*quantidade >= MAX) {
         printf("Limite de produtos atingido!\n");
         return;
     }
 
-    getchar(); // limpar o \n
+    getchar();
     printf("Digite o nome: ");
-    fgets(p[*qtd].nome, sizeof(p[*qtd].nome), stdin);
-
-    // Remover \n do nome, se houver
-    size_t len = strlen(p[*qtd].nome);
-    if (len > 0 && p[*qtd].nome[len - 1] == '\n') {
-        p[*qtd].nome[len - 1] = '\0';
-    }
-
-    p[*qtd].codigo = (*codigoAtual)++;
+    fgets(p[*quantidade].nome, sizeof(p[*quantidade].nome), stdin);
+    p[*quantidade].codigo = (*codigoAtual)++;
     printf("Digite a quantidade: ");
-    scanf("%d", &p[*qtd].quantidade);
+    scanf("%d", &p[*quantidade].quantidade);
     printf("Digite o preço: ");
-    scanf("%lf", &p[*qtd].preco);
+    scanf("%lf", &p[*quantidade].preco);
 
-    (*qtd)++;
+    (*quantidade)++;
+}
+void buscar(Produto p[], int q){
+int codigo;
+printf("Digite o código do produto a ser buscado: ");
+scanf("%d", &codigo);
+for (int i = 0; i < q; i++) {
+    if (codigo == p[i].codigo) {
+        printf("Nome: %s\n", p[i].nome);
+            printf("Código: %d\n", p[i].codigo);
+            printf("Quantidade: %d\n", p[i].quantidade);
+            printf("Preço: %.2lf\n", p[i].preco);
+            return;       
+  }
+ }
+ printf("Produto não encontrado\n");
 }
 
-void listar(Produto p[], int qtd) {
-    for (int i = 0; i < qtd; i++) {
-        printf("\nProduto %d\n", i + 1);
+void listar(Produto p[], int quantidade) {
+    for (int i = 0; i < quantidade; i++) {
+        printf("Produto %d\n", i + 1);
         printf("Nome: %s\n", p[i].nome);
         printf("Código: %d\n", p[i].codigo);
         printf("Quantidade: %d\n", p[i].quantidade);
@@ -46,13 +54,13 @@ void listar(Produto p[], int qtd) {
 }
 
 int main() {
-    Produto produtos[MAX_PRODUTOS];
+    Produto produtos[MAX];
     int quantidade = 0;
     int codigo = 1;
     int opcao;
 
     do {
-        printf("\n1 - Adicionar Produto\n2 - Listar Produtos\n0 - Sair\n");
+        printf("1 - Adicionar Produto\n2 - Listar Produtos\n3 - Buscar Produtos\n0 - Sair\n");
         scanf("%d", &opcao);
         switch(opcao) {
             case 1:
@@ -61,6 +69,8 @@ int main() {
             case 2:
                 listar(produtos, quantidade);
                 break;
+            case 3: 
+               buscar(produtos,quantidade);    
             case 0:
                 break;
             default:
