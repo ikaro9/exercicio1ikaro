@@ -10,6 +10,14 @@ typedef struct {
     double preco;
 } Produto;
 
+void limparQuebraDeLinha(char texto[]) {
+    for (int i = 0; texto[i] != '\0'; i++) {
+        if (texto[i] == '\n') {
+            texto[i] = '\0';
+            break;
+        }
+    }
+}
 void adicionar(Produto p[], int *quantidade, int *codigoAtual) {
     if (*quantidade >= MAX) {
         printf("Limite de produtos atingido!\n");
@@ -19,6 +27,7 @@ void adicionar(Produto p[], int *quantidade, int *codigoAtual) {
     getchar();
     printf("Digite o nome: ");
     fgets(p[*quantidade].nome, sizeof(p[*quantidade].nome), stdin);
+    limparQuebraDeLinha(p[*quantidade].nome);
     p[*quantidade].codigo = (*codigoAtual)++;
     printf("Digite a quantidade: ");
     scanf("%d", &p[*quantidade].quantidade);
