@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include<locale.h>
+
 
 int fibonacci_recursivo(int n)
 {
@@ -16,7 +16,6 @@ int fibonacci_recursivo(int n)
 int main()
 {
     int numero;
-    setlocale(LC_ALL,"portuguese");
 
     printf("Digite um número inteiro não negativo: ");
     scanf("%d", &numero);
